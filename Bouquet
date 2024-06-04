@@ -1,0 +1,36 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def draw_flower(ax, center, petal_color, num_petals=8, petal_length=0.3, petal_width=0.1):
+    theta = np.linspace(0, 2 * np.pi, 100)
+    x = petal_length * np.sin(theta)
+    y = petal_width * np.cos(theta)
+    
+    for i in range(num_petals):
+        angle = i * 2 * np.pi / num_petals
+        x_rot = center[0] + x * np.cos(angle) - y * np.sin(angle)
+        y_rot = center[1] + x * np.sin(angle) + y * np.cos(angle)
+        ax.fill(x_rot, y_rot, petal_color, edgecolor='black')
+
+def draw_bouquet():
+    fig, ax = plt.subplots()
+    ax.set_aspect('equal')
+    ax.axis('off')
+
+    # Background
+    ax.set_facecolor('skyblue')
+
+    # Stems
+    for i in range(-4, 5, 2):
+        ax.plot([i, i], [0, -1], color='green', linewidth=5)
+
+    # Flowers
+    colors = ['red', 'yellow', 'magenta', 'cyan', 'orange', 'purple']
+    for i, color in zip(range(-4, 5, 2), colors):
+        draw_flower(ax, (i, 0), color)
+
+    # Display the bouquet
+    plt.show()
+
+# Draw the bouquet
+draw_bouquet()
